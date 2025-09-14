@@ -14,7 +14,6 @@ import Signup from "./pages/auth/Signup";
 import VerifyEmail from "./pages/auth/VerifyEmail";
 import PhoneAuth from "./pages/auth/Phone";
 
-const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

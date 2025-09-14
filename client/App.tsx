@@ -24,7 +24,7 @@ const App = () => (
           <Route path="/snaps" element={<Placeholder title="My Snaps" />} />
           <Route path="/snap" element={<Placeholder title="Snap" />} />
           <Route path="/account" element={<Placeholder title="Account" />} />
-          <Route path="/more" element={<Placeholder title="More" />} />
+          <Route path="/more" element={<More />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

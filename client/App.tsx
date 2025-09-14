@@ -16,27 +16,25 @@ import PhoneAuth from "./pages/auth/Phone";
 
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/snaps" element={<Placeholder title="My Snaps" />} />
-          <Route path="/snap" element={<Placeholder title="Snap" />} />
-          <Route path="/account" element={<Placeholder title="Account" />} />
-          <Route path="/more" element={<More />} />
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/signup" element={<Signup />} />
-          <Route path="/auth/verify-email" element={<VerifyEmail />} />
-          <Route path="/auth/phone" element={<PhoneAuth />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <TooltipProvider>
+    <Toaster />
+    <Sonner />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/snaps" element={<Placeholder title="My Snaps" />} />
+        <Route path="/snap" element={<Placeholder title="Snap" />} />
+        <Route path="/account" element={<Placeholder title="Account" />} />
+        <Route path="/more" element={<More />} />
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/signup" element={<Signup />} />
+        <Route path="/auth/verify-email" element={<VerifyEmail />} />
+        <Route path="/auth/phone" element={<PhoneAuth />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  </TooltipProvider>
 );
 
 createRoot(document.getElementById("root")!).render(<App />);

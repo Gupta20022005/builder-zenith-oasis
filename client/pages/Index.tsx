@@ -1,62 +1,132 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
+import MobileShell from "@/components/layout/MobileShell";
+import { BadgeCheck, Bookmark, Share2, ShieldCheck, MapPin, Filter, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+interface FeedItem {
+  id: string;
+  title: string;
+  solver: string;
+  time: string;
+  blurb: string;
+  image: string;
+}
 
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
-
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
-    }
-  };
+  const feed = useMemo<FeedItem[]>(
+    () => [
+      {
+        id: "1",
+        title: "Playground Equipment",
+        solver: "Melbourne City Council",
+        time: "5:30 PM · Today",
+        blurb:
+          "Birrarung Marr playground softfall/tanbark needs topping up. Critical low level posing injury risk.",
+        image: "/placeholder.svg",
+      },
+      {
+        id: "2",
+        title: "Road Signage",
+        solver: "Melbourne City Council",
+        time: "3:51 PM · Today",
+        blurb:
+          "Directional signs are dirty and require cleaning for visibility.",
+        image: "/placeholder.svg",
+      },
+    ],
+    [],
+  );
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-            />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
+    <MobileShell>
+      {/* Location banner */}
+      <div className="mb-3 rounded-xl bg-foreground/5 px-4 py-3 text-sm flex items-start gap-3">
+        <ShieldCheck className="mt-0.5 size-4 text-primary" />
+        <div className="flex-1">
+          <p className="font-medium">See what's happening around you.</p>
+          <p className="text-muted-foreground">Provide your location to personalise the feed.</p>
+        </div>
+        <Button size="sm" className="rounded-full px-3">Provide</Button>
       </div>
-    </div>
+
+      {/* Hero */}
+      <div className="relative overflow-hidden rounded-2xl">
+        <img src="/placeholder.svg" alt="Hero" className="h-40 w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        <div className="absolute bottom-3 left-4 text-white text-lg font-semibold drop-shadow">Spring into action</div>
+      </div>
+
+      {/* Quick links */}
+      <div className="mt-3 flex items-center gap-3">
+        <div className="flex -space-x-3">
+          <span className="inline-grid size-8 place-items-center rounded-full bg-white ring-2 ring-white shadow"><BadgeCheck className="size-4 text-primary"/></span>
+          <span className="inline-grid size-8 place-items-center rounded-full bg-white ring-2 ring-white shadow"><BadgeCheck className="size-4 text-primary"/></span>
+          <span className="inline-grid size-8 place-items-center rounded-full bg-white ring-2 ring-white shadow"><BadgeCheck className="size-4 text-primary"/></span>
+        </div>
+        <div className="text-sm font-medium">Solvers Near Me</div>
+        <ChevronRight className="ml-auto size-4 opacity-60" />
+      </div>
+
+      {/* Filters */}
+      <div className="mt-4 flex items-center gap-2 overflow-x-auto pb-1">
+        <FilterChip active>Nearby</FilterChip>
+        <FilterChip>Solved</FilterChip>
+        <FilterChip>Dumped Rubbish</FilterChip>
+        <FilterChip>Graffiti - General</FilterChip>
+        <Button variant="ghost" className="h-8 px-3 text-xs"><Filter className="mr-1 size-4"/>Filter</Button>
+      </div>
+
+      {/* Feed */}
+      <section className="mt-4 space-y-6">
+        {feed.map((item) => (
+          <article key={item.id} className="rounded-2xl border bg-card shadow-sm">
+            <div className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <MapPin className="size-4 text-primary" />
+                  <span>{item.time}</span>
+                </div>
+                <span className="inline-flex items-center gap-1 text-xs text-primary"><BadgeCheck className="size-4"/>Snapped</span>
+              </div>
+              <h3 className="mt-2 text-base font-semibold">{item.title}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{item.blurb}</p>
+            </div>
+            <div className="mx-4 overflow-hidden rounded-xl">
+              <img src={item.image} alt="" className="aspect-[16/9] w-full object-cover" />
+            </div>
+            <div className="p-4 pt-3 flex items-center gap-2">
+              <span className="text-xs text-muted-foreground">Solver</span>
+              <span className="rounded-full bg-secondary px-2 py-1 text-xs font-medium">{item.solver}</span>
+              <div className="ml-auto flex items-center gap-2">
+                <IconButton aria-label="Bookmark"><Bookmark className="size-5"/></IconButton>
+                <IconButton aria-label="Share"><Share2 className="size-5"/></IconButton>
+              </div>
+            </div>
+          </article>
+        ))}
+      </section>
+    </MobileShell>
+  );
+}
+
+function IconButton({ children, className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button className={cn("rounded-full p-2 hover:bg-accent", className)} {...props}>
+      {children}
+    </button>
+  );
+}
+
+function FilterChip({ children, active = false }: { children: React.ReactNode; active?: boolean }) {
+  return (
+    <button
+      className={cn(
+        "h-8 whitespace-nowrap rounded-full border px-3 text-xs font-medium",
+        active ? "bg-primary text-primary-foreground border-transparent" : "bg-white"
+      )}
+    >
+      {children}
+    </button>
   );
 }

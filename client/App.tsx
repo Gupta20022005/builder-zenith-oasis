@@ -13,6 +13,8 @@ import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import VerifyEmail from "./pages/auth/VerifyEmail";
 import PhoneAuth from "./pages/auth/Phone";
+import Start from "./pages/auth/Start";
+import Intro2 from "./pages/auth/Intro2";
 
 
 const App = () => (

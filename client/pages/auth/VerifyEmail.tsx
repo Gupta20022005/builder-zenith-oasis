@@ -16,7 +16,9 @@ export default function VerifyEmail() {
         <p className="text-sm text-muted-foreground">We sent a verification link to <span className="font-medium">{email}</span>. Click the link to finish signing up.</p>
       </div>
       <div className="mt-4 grid gap-2">
-        <Button className="rounded-full" onClick={() => navigate("/")}>I\'ve verified my email</Button>
+        <Button className="rounded-full" onClick={() => navigate("/auth/phone")}>
+          I\'ve verified my email
+        </Button>
         <Button variant="outline" className="rounded-full" onClick={() => alert("Resent!")}>Resend email</Button>
       </div>
     </AuthLayout>

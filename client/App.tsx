@@ -10,6 +10,10 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Placeholder from "./pages/Placeholder";
 import More from "./pages/More";
+import Login from "./pages/auth/Login";
+import Signup from "./pages/auth/Signup";
+import VerifyEmail from "./pages/auth/VerifyEmail";
+import PhoneAuth from "./pages/auth/Phone";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +29,10 @@ const App = () => (
           <Route path="/snap" element={<Placeholder title="Snap" />} />
           <Route path="/account" element={<Placeholder title="Account" />} />
           <Route path="/more" element={<More />} />
+          <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/signup" element={<Signup />} />
+          <Route path="/auth/verify-email" element={<VerifyEmail />} />
+          <Route path="/auth/phone" element={<PhoneAuth />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

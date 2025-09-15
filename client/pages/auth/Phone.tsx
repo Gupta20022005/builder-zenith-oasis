@@ -44,6 +44,7 @@ export default function PhoneAuth() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            try { localStorage.setItem("app:promptLocation", "1"); } catch {}
             window.location.href = "/";
           }}
           className="grid gap-4"

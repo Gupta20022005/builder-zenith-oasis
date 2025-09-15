@@ -3,6 +3,7 @@ import MobileShell from "@/components/layout/MobileShell";
 import { BadgeCheck, Bookmark, Share2, ShieldCheck, MapPin, Filter, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useLocationState } from "@/context/location";
 
 interface FeedItem {
   id: string;
@@ -38,17 +39,22 @@ export default function Index() {
     [],
   );
 
+  const loc = useLocationState();
   return (
     <MobileShell>
       {/* Location banner */}
-      <div className="mb-3 rounded-xl bg-foreground/5 px-4 py-3 text-sm flex items-start gap-3">
-        <ShieldCheck className="mt-0.5 size-4 text-primary" />
-        <div className="flex-1">
-          <p className="font-medium">See what's happening around you.</p>
-          <p className="text-muted-foreground">Provide your location to personalise the feed.</p>
+      {!loc.cityLine && (
+        <div className="mb-3 rounded-xl bg-foreground/5 px-4 py-3 text-sm flex items-start gap-3">
+          <ShieldCheck className="mt-0.5 size-4 text-primary" />
+          <div className="flex-1">
+            <p className="font-medium">See what's happening around you.</p>
+            <p className="text-muted-foreground">Provide your location to personalise the feed.</p>
+          </div>
+          <Button size="sm" className="rounded-full px-3" onClick={loc.requestLocation} disabled={loc.loading}>
+            {loc.loading ? "Locating..." : "Provide"}
+          </Button>
         </div>
-        <Button size="sm" className="rounded-full px-3" onClick={() => window.dispatchEvent(new CustomEvent("app:requestLocation"))}>Provide</Button>
-      </div>
+      )}
 
       {/* Hero */}
       <div className="relative overflow-hidden rounded-2xl">

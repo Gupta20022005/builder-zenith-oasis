@@ -22,8 +22,9 @@ const App = () => (
   <TooltipProvider>
     <Toaster />
     <Sonner />
-    <BrowserRouter>
-      <Routes>
+    <LocationProvider>
+      <BrowserRouter>
+        <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/auth/start" element={<Start />} />
         <Route path="/auth/intro2" element={<Intro2 />} />
@@ -37,8 +38,9 @@ const App = () => (
         <Route path="/auth/phone" element={<PhoneAuth />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </LocationProvider>
   </TooltipProvider>
 );
 

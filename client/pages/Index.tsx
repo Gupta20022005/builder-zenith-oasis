@@ -47,7 +47,7 @@ export default function Index() {
           <p className="font-medium">See what's happening around you.</p>
           <p className="text-muted-foreground">Provide your location to personalise the feed.</p>
         </div>
-        <Button size="sm" className="rounded-full px-3">Provide</Button>
+        <Button size="sm" className="rounded-full px-3" onClick={() => window.dispatchEvent(new CustomEvent("app:requestLocation"))}>Provide</Button>
       </div>
 
       {/* Hero */}

@@ -10,6 +10,7 @@ export default function Login() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          try { localStorage.setItem("app:promptLocation", "1"); } catch {}
           navigate("/");
         }}
         className="grid gap-4"

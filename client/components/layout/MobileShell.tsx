@@ -11,6 +11,9 @@ interface MobileShellProps {
 
 export default function MobileShell({ children, className }: MobileShellProps) {
   const loc = useLocationState();
+  useEffect(() => {
+    if (!loc.live && !loc.cityLine) loc.startLive();
+  }, [loc.live, loc.cityLine, loc.startLive]);
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-30 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">

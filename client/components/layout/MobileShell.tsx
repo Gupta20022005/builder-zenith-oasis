@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { MapPin, Bell, User2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import BottomNav from "./BottomNav";

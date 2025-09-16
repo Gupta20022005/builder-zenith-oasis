@@ -16,14 +16,15 @@ export default function MobileShell({ children, className }: MobileShellProps) {
       <header className="sticky top-0 z-30 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
         <div className="mx-auto max-w-md px-4 py-3 flex items-center justify-between">
           <button
-            onClick={() => loc.requestLocation()}
+            onClick={() => loc.startLive()}
             className="flex items-center gap-2 text-sm hover:opacity-90"
             aria-label="Set location"
           >
             <MapPin className="size-4 text-primary" />
             <span className="font-semibold">
-              {loc.loading ? "Locating..." : loc.cityLine || "Set location"}
+              {loc.loading ? "Locating..." : loc.cityLine || (loc.coords ? `${loc.coords.lat.toFixed(3)}, ${loc.coords.lon.toFixed(3)}` : "Set location")}
             </span>
+            {loc.live && <span className="ml-2 inline-flex h-2 w-2 animate-pulse rounded-full bg-green-500" />}
           </button>
           <div className="flex items-center gap-3">
             <button aria-label="Notifications" className="rounded-full p-2 hover:bg-accent">

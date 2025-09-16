@@ -4,6 +4,7 @@ import { BadgeCheck, Bookmark, Share2, ShieldCheck, MapPin, Filter, ChevronRight
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useLocationState } from "@/context/location";
+import { Link } from "react-router-dom";
 
 interface FeedItem {
   id: string;
@@ -57,11 +58,11 @@ export default function Index() {
       )}
 
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl">
-        <img src="/placeholder.svg" alt="Hero" className="h-40 w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-        <div className="absolute bottom-3 left-4 text-white text-lg font-semibold drop-shadow">Spring into action</div>
-      </div>
+      <Link to="/account" className="group relative block overflow-hidden rounded-2xl" aria-label="Go to account">
+        <img src="/placeholder.svg" alt="Hero" className="h-40 w-full object-cover transition-transform group-hover:scale-[1.02]" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        <div className="pointer-events-none absolute bottom-3 left-4 text-white text-lg font-semibold drop-shadow">Spring into action</div>
+      </Link>
 
       {/* Quick links */}
       <div className="mt-3 flex items-center gap-3">
@@ -98,9 +99,9 @@ export default function Index() {
               <h3 className="mt-2 text-base font-semibold">{item.title}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{item.blurb}</p>
             </div>
-            <div className="mx-4 overflow-hidden rounded-xl">
-              <img src={item.image} alt="" className="aspect-[16/9] w-full object-cover" />
-            </div>
+            <Link to="/account" className="mx-4 block overflow-hidden rounded-xl" aria-label="Go to account">
+              <img src={item.image} alt="" className="aspect-[16/9] w-full object-cover cursor-pointer transition-transform hover:scale-[1.01]" />
+            </Link>
             <div className="p-4 pt-3 flex items-center gap-2">
               <span className="text-xs text-muted-foreground">Solver</span>
               <span className="rounded-full bg-secondary px-2 py-1 text-xs font-medium">{item.solver}</span>

@@ -51,7 +51,7 @@ export default function Index() {
             <p className="font-medium">See what's happening around you.</p>
             <p className="text-muted-foreground">Provide your location to personalise the feed.</p>
           </div>
-          <Button size="sm" className="rounded-full px-3" onClick={loc.requestLocation} disabled={loc.loading}>
+          <Button size="sm" className="rounded-full px-3" onClick={loc.startLive} disabled={loc.loading}>
             {loc.loading ? "Locating..." : "Provide"}
           </Button>
         </div>

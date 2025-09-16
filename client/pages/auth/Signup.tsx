@@ -13,7 +13,13 @@ export default function Signup() {
         onSubmit={(e) => {
           e.preventDefault();
           const form = e.currentTarget as HTMLFormElement;
-          const email = (new FormData(form).get("email") as string) || "";
+          const fd = new FormData(form);
+          const email = (fd.get("email") as string) || "";
+          try {
+            const next = { first: String(fd.get("first")||""), last: String(fd.get("last")||""), email, phone: String(fd.get("phone")||"") };
+            localStorage.setItem("app:user", JSON.stringify(next));
+            localStorage.setItem("app:promptLocation", "1");
+          } catch {}
           navigate(`/auth/verify-email?email=${encodeURIComponent(email)}`);
         }}
         className="grid gap-4"

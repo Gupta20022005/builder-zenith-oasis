@@ -25,7 +25,7 @@ export default function MobileShell({ children, className }: MobileShellProps) {
           >
             <MapPin className="size-4 text-primary" />
             <span className="font-semibold">
-              {loc.loading ? "Locating..." : loc.cityLine || (loc.coords ? `${loc.coords.lat.toFixed(3)}, ${loc.coords.lon.toFixed(3)}` : "Set location")}
+              {loc.cityLine || (loc.coords ? `${loc.coords.lat.toFixed(3)}, ${loc.coords.lon.toFixed(3)}` : loc.loading ? "Locating..." : "")}
             </span>
             {loc.live && <span className="ml-2 inline-flex h-2 w-2 animate-pulse rounded-full bg-green-500" />}
           </button>

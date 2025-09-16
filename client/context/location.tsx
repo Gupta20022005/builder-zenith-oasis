@@ -6,7 +6,10 @@ export interface LocationState {
   cityLine: string | null; // e.g. "Melbourne, Victoria"
   loading: boolean;
   error: string | null;
+  live: boolean;
   requestLocation: () => Promise<void>;
+  startLive: () => Promise<void>;
+  stopLive: () => void;
 }
 
 const LocationCtx = createContext<LocationState | null>(null);
@@ -19,6 +22,9 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
   const [cityLine, setCityLine] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [live, setLive] = useState(false);
+  const watchId = React.useRef<number | null>(null);
+  const lastGeocodeAt = React.useRef<number>(0);
 
   // Load last known location
   useEffect(() => {
@@ -70,13 +76,57 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const startLive = useCallback(async () => {
+    if (!("geolocation" in navigator)) {
+      setError("Geolocation not supported");
+      return;
+    }
+    if (watchId.current != null) return; // already watching
+    setLive(true);
+    setLoading(true);
+    watchId.current = navigator.geolocation.watchPosition(
+      async (p) => {
+        const pos = { lat: p.coords.latitude, lon: p.coords.longitude };
+        setCoords(pos);
+        const now = Date.now();
+        if (!cityLine || now - lastGeocodeAt.current > 30000) {
+          const line = await reverseGeocode(pos);
+          setCityLine(line);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ coords: pos, cityLine: line }));
+          lastGeocodeAt.current = now;
+        }
+        setLoading(false);
+      },
+      (err) => {
+        setError(err.message);
+        setLoading(false);
+      },
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 },
+    );
+  }, [cityLine]);
+
+  const stopLive = useCallback(() => {
+    if (watchId.current != null) {
+      try { navigator.geolocation.clearWatch(watchId.current); } catch {}
+      watchId.current = null;
+    }
+    setLive(false);
+  }, []);
+
   // Auto prompt if requested by previous page
   useEffect(() => {
     const should = localStorage.getItem(PROMPT_FLAG) === "1";
-    if (should) requestLocation();
-  }, [requestLocation]);
+    if (should) startLive();
+  }, [startLive]);
 
-  const value = useMemo<LocationState>(() => ({ coords, cityLine, loading, error, requestLocation }), [coords, cityLine, loading, error, requestLocation]);
+  // Custom window event trigger (for places that don't have context)
+  useEffect(() => {
+    const handler = () => startLive();
+    window.addEventListener("app:requestLocation", handler as any);
+    return () => window.removeEventListener("app:requestLocation", handler as any);
+  }, [startLive]);
+
+  const value = useMemo<LocationState>(() => ({ coords, cityLine, loading, error, live, requestLocation, startLive, stopLive }), [coords, cityLine, loading, error, live, requestLocation, startLive, stopLive]);
 
   return <LocationCtx.Provider value={value}>{children}</LocationCtx.Provider>;
 }

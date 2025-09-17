@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import MobileShell from "@/components/layout/MobileShell";
-import { BadgeCheck, Bookmark, Share2, ShieldCheck, MapPin, Filter, ChevronRight } from "lucide-react";
+import { BadgeCheck, Bookmark, Share2, ShieldCheck, MapPin, Filter, ChevronRight, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useLocationState } from "@/context/location";

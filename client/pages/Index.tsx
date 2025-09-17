@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import MobileShell from "@/components/layout/MobileShell";
 import { BadgeCheck, Bookmark, Share2, ShieldCheck, MapPin, Filter, ChevronRight, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ interface FeedItem {
 }
 
 export default function Index() {
+  const navigate = useNavigate();
   const feed = useMemo<FeedItem[]>(
     () => [
       {
@@ -106,6 +108,12 @@ export default function Index() {
               <span className="text-xs text-muted-foreground">Solver</span>
               <span className="rounded-full bg-secondary px-2 py-1 text-xs font-medium">{item.solver}</span>
               <div className="ml-auto flex items-center gap-2">
+                <button
+                  className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs hover:bg-accent"
+                  onClick={() => navigate(`/repost?title=${encodeURIComponent(item.title)}&blurb=${encodeURIComponent(item.blurb)}&category=${encodeURIComponent("Community")}`)}
+                >
+                  <Camera className="size-4"/> Repost
+                </button>
                 <IconButton aria-label="Bookmark"><Bookmark className="size-5"/></IconButton>
                 <IconButton aria-label="Share"><Share2 className="size-5"/></IconButton>
               </div>

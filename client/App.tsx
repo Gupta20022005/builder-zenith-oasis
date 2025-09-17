@@ -38,6 +38,7 @@ const App = () => (
         <Route path="/snap" element={<Placeholder title="Snap" />} />
         <Route path="/account" element={<Account />} />
         <Route path="/more" element={<More />} />
+        <Route path="/repost" element={<Repost />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<Signup />} />
         <Route path="/auth/verify-email" element={<VerifyEmail />} />

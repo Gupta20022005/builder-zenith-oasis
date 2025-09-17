@@ -8,7 +8,8 @@ export interface SnapItem {
   createdAt: number;
   status: SnapStatus;
   location?: string;
-  image?: string;
+  image?: string; // data URL or path
+  repostOf?: { title: string; blurb?: string };
 }
 
 const KEY = "app:snaps";

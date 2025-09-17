@@ -21,6 +21,7 @@ import VerifyEmail from "./pages/auth/VerifyEmail";
 import PhoneAuth from "./pages/auth/Phone";
 import Start from "./pages/auth/Start";
 import Intro2 from "./pages/auth/Intro2";
+import Repost from "./pages/Repost";
 
 
 const App = () => (
